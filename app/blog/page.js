@@ -11,18 +11,19 @@ export default async function Blog() {
         query GetAllPosts {
             posts {
                 edges {
-                node {
-                    date
-                    id
-                    seo {
-                    title
-                    description
+                    node {
+                        date
+                        id
+                        seo {
+                            title
+                            description
+                        }
+                        postContent {
+                            titlePost
+                            textPost
+                        }
+                        slug
                     }
-                    postContent {
-                    titlePost
-                    textPost
-                    }
-                }
                 }
             }
         }

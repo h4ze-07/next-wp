@@ -1,5 +1,11 @@
 import FaqCard from "@/components/FaqCard";
 
+export const metadata = {
+	title: "MkeyMedia - FAQ Page",
+	description:
+		"Explore our comprehensive FAQ Page, designed to answer all your questions quickly and effectively. Find detailed information and solutions to common issues, ensuring a smooth experience with our services. Stay informed and empowered with our up-to-date FAQ section.",
+};
+
 export default async function Faq() {
 	const query = `
         query GetFaqs {
