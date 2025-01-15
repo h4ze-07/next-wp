@@ -1,6 +1,76 @@
-export default function PostPage({ params }) {
-	console.log(params);
+export async function generateMetadata({ params }) {
 	const { slug } = params;
+	const query = `
+      query GetPostBySlug($slug: String!) {
+        postBy(slug: $slug) {
+          seo {
+            title
+            description
+          }
+        }
+      }
+    `;
 
-	return <h1 className="mt-5">My Post: {slug}</h1>;
+	const response = await fetch(process.env.NEXT_PUBLIC_WP_URL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			query,
+			variables: { slug },
+		}),
+	});
+
+	const responseData = await response.json();
+	const seoData = responseData.data.postBy.seo;
+
+	return {
+		title: seoData.title,
+		description: seoData.description,
+	};
+}
+
+export default async function Page({ params }) {
+	const { slug } = params;
+	const query = `
+      query GetPostBySlug($slug: String!) {
+        postBy(slug: $slug) {
+          date
+          postContent {
+            textPost
+            titlePost
+          }
+        }
+      }
+    `;
+
+	const response = await fetch(process.env.NEXT_PUBLIC_WP_URL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			query,
+			variables: { slug },
+		}),
+		next: {
+			revalidate: 3600,
+		},
+	});
+
+	const responseData = await response.json();
+	const postData = responseData.data.postBy;
+
+	return (
+		<div className="mt-[100px] container">
+			<p>{postData.date}</p>
+			<h1 className="">{postData.postContent.titlePost}</h1>
+			<div
+				dangerouslySetInnerHTML={{
+					__html: postData.postContent.textPost,
+				}}
+			></div>
+		</div>
+	);
 }
