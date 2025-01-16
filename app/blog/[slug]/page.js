@@ -34,15 +34,15 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
 	const { slug } = await params;
 	const query = `
-      query GetPostBySlug($slug: String!) {
+        query GetPostBySlug($slug: String!) {
         postBy(slug: $slug) {
-          date
-          postContent {
+            date
+            postContent {
             textPost
             titlePost
-          }
+            }
         }
-      }
+        }
     `;
 
 	const response = await fetch(process.env.NEXT_PUBLIC_WP_URL, {
@@ -60,6 +60,7 @@ export default async function Page({ params }) {
 	});
 
 	const responseData = await response.json();
+	console.log(responseData);
 	const postData = responseData.data.postBy;
 
 	return (
