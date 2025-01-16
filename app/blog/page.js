@@ -14,10 +14,6 @@ export default async function Blog() {
                     node {
                         date
                         id
-                        seo {
-                            title
-                            description
-                        }
                         postContent {
                             titlePost
                             textPost

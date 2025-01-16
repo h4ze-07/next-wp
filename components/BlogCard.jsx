@@ -6,8 +6,6 @@ const BlogCard = ({ post }) => {
     const date = post.node.date;
     const slug = post.node.slug;
     const postData = post.node.postContent;
-    const seoData = post.node.seo;
-
 
     return (
         <div className='flex flex-col gap-3 p-5'>

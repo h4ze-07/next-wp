@@ -1,5 +1,5 @@
 export async function generateMetadata({ params }) {
-	const { slug } = params;
+	const { slug } = await params;
 	const query = `
       query GetPostBySlug($slug: String!) {
         postBy(slug: $slug) {
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-	const { slug } = params;
+	const { slug } = await params;
 	const query = `
       query GetPostBySlug($slug: String!) {
         postBy(slug: $slug) {
